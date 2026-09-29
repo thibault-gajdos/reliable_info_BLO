@@ -45,8 +45,10 @@ functions {
     return (2 * Psi / denom) * (G - 0.5 * (Delta_plus + Delta_minus));
   }
 
+  // If Z ~ N(mu, s^2), then E[inv_logit(Z)] ≈ inv_logit( mu / sqrt(1 + (3/pi^2)*s^2 ) )
+  // (probit approximation inv_logit(x) ≈ Phi(x / sqrt(pi^2/3)), applied twice; internal noise sd sigma = 1)
   real approx_logit_arg(real mu, real s) {
-    real c = (pi()^2) / 3;
+    real c = 3 / (pi()^2);
     return mu / sqrt(1 + c * square(s));
   }
 
